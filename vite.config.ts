@@ -9,4 +9,7 @@ export default defineConfig({
             '/@': join(__dirname, 'src'),
         },
     },
+    server: {
+        port: 8000,
+    },
 });
