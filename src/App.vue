@@ -4,7 +4,30 @@
         <router-link to="/about">About</router-link>
     </div>
     <router-view />
+    <VueQueryDevTools />
 </template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { useQueryProvider } from 'vue-query';
+import { VueQueryDevTools } from 'vue-query/devtools';
+
+export default defineComponent({
+    name: 'App',
+    components: {
+        VueQueryDevTools,
+    },
+    setup() {
+        useQueryProvider({
+            defaultOptions: {
+                queries: {
+                    refetchOnWindowFocus: false,
+                },
+            },
+        });
+    },
+});
+</script>
 
 <style lang="scss">
 #app {
