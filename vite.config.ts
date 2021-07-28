@@ -13,13 +13,16 @@ const themeVariables = lessToJS(
     ),
 );
 
+const needAnalyze = process.env.analyze === 'true';
+
 export default defineConfig({
     build: {
         rollupOptions: {
             plugins: [
-                visualizer({
-                    open: true,
-                }),
+                needAnalyze &&
+                    visualizer({
+                        open: true,
+                    }),
             ],
         },
     },
