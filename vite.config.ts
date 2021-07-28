@@ -1,48 +1,56 @@
-import { join } from 'path';
-import { defineConfig, UserConfigExport } from 'vite';
+import { resolve } from 'path';
+import { readFileSync } from 'fs';
+import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import styleImport from 'vite-plugin-style-import';
 import { visualizer } from 'rollup-plugin-visualizer';
+import lessToJS from 'less-vars-to-js';
 
-type Mode = 'development' | 'test' | 'production';
+const themeVariables = lessToJS(
+    readFileSync(
+        resolve(__dirname, './src/styles/antd.customize.less'),
+        'utf8',
+    ),
+);
 
-export default ({ mode }: { mode: Mode }): UserConfigExport =>
-    defineConfig({
-        build: {
-            rollupOptions: {
-                plugins: [
-                    mode === 'test' &&
-                        visualizer({
-                            open: true,
-                        }),
-                ],
+export default defineConfig({
+    build: {
+        rollupOptions: {
+            plugins: [
+                visualizer({
+                    open: true,
+                }),
+            ],
+        },
+    },
+    css: {
+        preprocessorOptions: {
+            less: {
+                javascriptEnabled: true,
+                modifyVars: themeVariables,
             },
         },
-        plugins: [
-            vue(),
-            styleImport({
-                libs: [
-                    {
-                        libraryName: 'element-plus',
-                        esModule: true,
-                        ensureStyleFile: true,
-                        resolveStyle: (name) => {
-                            name = name.slice(3);
-                            return `element-plus/packages/theme-chalk/src/${name}.scss`;
-                        },
-                        resolveComponent: (name) => {
-                            return `element-plus/lib/${name}`;
-                        },
+    },
+    plugins: [
+        vue(),
+        styleImport({
+            libs: [
+                {
+                    libraryName: 'ant-design-vue',
+                    esModule: true,
+                    resolveStyle: (name) => {
+                        return `ant-design-vue/es/${name}/style/index`;
                     },
-                ],
-            }),
-        ],
-        resolve: {
-            alias: {
-                '/@': join(__dirname, 'src'),
-            },
+                },
+            ],
+        }),
+    ],
+    resolve: {
+        alias: {
+            '/@': resolve(__dirname, './src'),
         },
-        server: {
-            port: 8000,
-        },
-    });
+    },
+    server: {
+        port: 8000,
+    },
+});
