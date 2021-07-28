@@ -2,18 +2,18 @@
     <div class="home">
         <p>{{ store.state.counter.count }}</p>
         <div class="button-wrapper">
-            <el-button
-                size="small"
+            <a-button
+                type="primary"
                 @click="store.commit('counter/increment', 1)"
             >
                 同步加1
-            </el-button>
-            <el-button
-                size="small"
+            </a-button>
+            <a-button
+                type="primary"
                 @click="store.dispatch('counter/incrementAsync', 1)"
             >
                 异步加1
-            </el-button>
+            </a-button>
         </div>
         <img alt="Vue logo" src="../assets/logo.png" />
         <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
