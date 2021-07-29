@@ -7,53 +7,50 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import lessToJS from 'less-vars-to-js';
 
 const themeVariables = lessToJS(
-    readFileSync(
-        resolve(__dirname, './src/styles/antd.customize.less'),
-        'utf8',
-    ),
+  readFileSync(resolve(__dirname, './src/styles/antd.customize.less'), 'utf8'),
 );
 
 const needAnalyze = process.env.analyze === 'true';
 
 export default defineConfig({
-    build: {
-        rollupOptions: {
-            plugins: [
-                needAnalyze &&
-                    visualizer({
-                        open: true,
-                    }),
-            ],
+  build: {
+    rollupOptions: {
+      plugins: [
+        needAnalyze &&
+          visualizer({
+            open: true,
+          }),
+      ],
+    },
+  },
+  css: {
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true,
+        modifyVars: themeVariables,
+      },
+    },
+  },
+  plugins: [
+    vue(),
+    styleImport({
+      libs: [
+        {
+          libraryName: 'ant-design-vue',
+          esModule: true,
+          resolveStyle: (name) => {
+            return `ant-design-vue/es/${name}/style/index`;
+          },
         },
+      ],
+    }),
+  ],
+  resolve: {
+    alias: {
+      '/@': resolve(__dirname, './src'),
     },
-    css: {
-        preprocessorOptions: {
-            less: {
-                javascriptEnabled: true,
-                modifyVars: themeVariables,
-            },
-        },
-    },
-    plugins: [
-        vue(),
-        styleImport({
-            libs: [
-                {
-                    libraryName: 'ant-design-vue',
-                    esModule: true,
-                    resolveStyle: (name) => {
-                        return `ant-design-vue/es/${name}/style/index`;
-                    },
-                },
-            ],
-        }),
-    ],
-    resolve: {
-        alias: {
-            '/@': resolve(__dirname, './src'),
-        },
-    },
-    server: {
-        port: 8000,
-    },
+  },
+  server: {
+    port: 8000,
+  },
 });
