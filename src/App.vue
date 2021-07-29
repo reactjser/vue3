@@ -1,3 +1,16 @@
+<script setup lang="ts">
+import { useQueryProvider } from 'vue-query';
+import { VueQueryDevTools } from 'vue-query/devtools';
+
+useQueryProvider({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+        },
+    },
+});
+</script>
+
 <template>
     <div id="nav">
         <router-link to="/">Home</router-link> |
@@ -6,28 +19,6 @@
     <router-view />
     <VueQueryDevTools />
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue';
-import { useQueryProvider } from 'vue-query';
-import { VueQueryDevTools } from 'vue-query/devtools';
-
-export default defineComponent({
-    name: 'App',
-    components: {
-        VueQueryDevTools,
-    },
-    setup() {
-        useQueryProvider({
-            defaultOptions: {
-                queries: {
-                    refetchOnWindowFocus: false,
-                },
-            },
-        });
-    },
-});
-</script>
 
 <style lang="scss">
 #app {

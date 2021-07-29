@@ -1,27 +1,5 @@
-<template>
-    <ul v-if="posts">
-        <li
-            v-for="post in posts.slice(0, 5)"
-            :key="post.id"
-            @click="setCurrentPostId(post.id)"
-        >
-            {{ post.title }}
-        </li>
-    </ul>
-    <h1>Post {{ currentPostId }}</h1>
-    <div v-if="isLoading" class="update">Loading...</div>
-    <div v-else-if="isError">An error has occurred: {{ error }}</div>
-    <div v-else-if="data">
-        <h1>{{ data.title }}</h1>
-        <div>
-            <p>{{ data.body }}</p>
-        </div>
-        <div v-if="isFetching" class="update">Background Updating...</div>
-    </div>
-</template>
-
-<script lang="ts">
-import { defineComponent, reactive, ref } from 'vue';
+<script setup lang="ts">
+import { reactive, ref } from 'vue';
 import { useQuery } from 'vue-query';
 
 interface Post {
@@ -45,33 +23,38 @@ const fetcher2 = async (id: number | undefined): Promise<Post | undefined> => {
     );
 };
 
-export default defineComponent({
-    name: 'Post',
-    emits: ['setPostId'],
-    setup() {
-        const currentPostId = ref<number | undefined>();
-        const setCurrentPostId = (postId: number | undefined) => {
-            currentPostId.value = postId;
-        };
-        const { data: posts } = useQuery('posts', fetcher1);
-        const { isLoading, isError, isFetching, data, error } = useQuery(
-            reactive(['post', { postId: currentPostId }]),
-            () => fetcher2(currentPostId.value),
-        );
-
-        return {
-            isLoading,
-            isError,
-            isFetching,
-            data,
-            error,
-            posts,
-            currentPostId,
-            setCurrentPostId,
-        };
-    },
-});
+const currentPostId = ref<number | undefined>();
+const setCurrentPostId = (postId: number | undefined) => {
+    currentPostId.value = postId;
+};
+const { data: posts } = useQuery('posts', fetcher1);
+const { isLoading, isError, isFetching, data, error } = useQuery(
+    reactive(['post', { postId: currentPostId }]),
+    () => fetcher2(currentPostId.value),
+);
 </script>
+
+<template>
+    <ul v-if="posts">
+        <li
+            v-for="post in posts.slice(0, 5)"
+            :key="post.id"
+            @click="setCurrentPostId(post.id)"
+        >
+            {{ post.title }}
+        </li>
+    </ul>
+    <h1>Post {{ currentPostId }}</h1>
+    <div v-if="isLoading" class="update">Loading...</div>
+    <div v-else-if="isError">An error has occurred: {{ error }}</div>
+    <div v-else-if="data">
+        <h1>{{ data.title }}</h1>
+        <div>
+            <p>{{ data.body }}</p>
+        </div>
+        <div v-if="isFetching" class="update">Background Updating...</div>
+    </div>
+</template>
 
 <style scoped>
 .update {
