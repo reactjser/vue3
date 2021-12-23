@@ -10,6 +10,7 @@
     "format": "prettier --write \"src/**/*.{vue,js,jsx,ts,tsx,json,css,scss,md}\""
   },
   "dependencies": {
+    "pinia": "^2.0.8",
     "vue": "^3.2.26",
     "vue-router": "^4.0.12"
   },
