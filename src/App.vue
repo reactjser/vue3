@@ -1,9 +1,19 @@
+<script setup lang="ts">
+import { ConfigProvider } from 'ant-design-vue';
+import zhCN from 'ant-design-vue/es/locale/zh_CN';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+dayjs.locale('zh-cn');
+</script>
+
 <template>
-  <div class="nav">
-    <router-link to="/">Home</router-link>
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view />
+  <ConfigProvider :locale="zhCN">
+    <div class="nav">
+      <router-link to="/">Home</router-link>
+      <router-link to="/about">About</router-link>
+    </div>
+    <router-view />
+  </ConfigProvider>
 </template>
 
 <style lang="scss">
