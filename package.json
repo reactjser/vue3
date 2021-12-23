@@ -9,7 +9,8 @@
     "format": "prettier --write \"src/**/*.{vue,js,jsx,ts,tsx,json,css,scss,md}\""
   },
   "dependencies": {
-    "vue": "^3.2.26"
+    "vue": "^3.2.26",
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
@@ -26,6 +27,7 @@
     "husky": "^7.0.4",
     "lint-staged": "^12.1.3",
     "prettier": "^2.5.1",
+    "sass": "^1.45.1",
     "typescript": "^4.5.4",
     "vite": "^2.7.6",
     "vue-tsc": "^0.30.0"
