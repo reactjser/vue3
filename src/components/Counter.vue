@@ -1,55 +1,54 @@
 <script setup lang="ts">
-import { ref, useCssModule } from 'vue';
+import { ref } from 'vue';
 import { useCounterStore } from '/@/stores/counter';
 
-const styles = useCssModule();
 const counter = useCounterStore();
 const incrementAmount = ref('2');
 </script>
 
 <template>
   <div>
-    <div :class="styles.row">
+    <div :class="$style.row">
       <button
-        :class="styles.button"
+        :class="$style.button"
         aria-label="Increment value"
         @click="counter.increment()"
       >
         +
       </button>
-      <span :class="styles.value">{{ counter.count }}</span>
+      <span :class="$style.value">{{ counter.count }}</span>
       <button
-        :class="styles.button"
+        :class="$style.button"
         aria-label="Decrement value"
         @click="counter.decrement()"
       >
         -
       </button>
     </div>
-    <div :class="styles.row">
+    <div :class="$style.row">
       <input
         v-model="incrementAmount"
-        :class="styles.textbox"
+        :class="$style.textbox"
         aria-label="Set increment amount"
       />
       <button
-        :class="styles.button"
+        :class="$style.button"
         @click="counter.incrementByAmount(Number(incrementAmount) || 0)"
       >
         Add Amount
       </button>
       <button
-        :class="styles.asyncButton"
+        :class="$style.asyncButton"
         @click="counter.incrementAsync(Number(incrementAmount) || 0)"
       >
         Add Async
       </button>
     </div>
-    <div :class="styles.row">
+    <div :class="$style.row">
       <span>Double Count:</span>
       <input
         :value="counter.doubleCount"
-        :class="styles.longTextbox"
+        :class="$style.longTextbox"
         disabled
       />
     </div>
