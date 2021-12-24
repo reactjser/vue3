@@ -2,5 +2,5 @@
 
 ## Usages
 ```
-npx degit reactjser/vue3#main <project-name>
+npx degit reactjser/vue3#mobile <project-name>
 ```

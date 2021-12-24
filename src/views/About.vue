@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { DatePicker } from 'ant-design-vue';
-import type { Dayjs } from 'dayjs';
-
-const currentDate = ref<Dayjs>();
+import { Button } from 'vant';
 </script>
 
 <template>
   <div>
-    <DatePicker v-model:value="currentDate" />
+    <Button type="primary">Hello Vant</Button>
   </div>
 </template>

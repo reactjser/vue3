@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { ConfigProvider } from 'ant-design-vue';
-import zhCN from 'ant-design-vue/es/locale/zh_CN';
-import dayjs from 'dayjs';
-import 'dayjs/locale/zh-cn';
-dayjs.locale('zh-cn');
+import { ConfigProvider } from 'vant';
+
+const themeVars = {
+  sliderActiveBackgroundColor: '#704cb6',
+  buttonPrimaryBorderColor: '#704cb6',
+  buttonPrimaryBackgroundColor: '#704cb6',
+};
 </script>
 
 <template>
-  <ConfigProvider :locale="zhCN">
+  <ConfigProvider :theme-vars="themeVars">
     <div class="nav">
       <router-link to="/">Home</router-link>
       <router-link to="/about">About</router-link>
